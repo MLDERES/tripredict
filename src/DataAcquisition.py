@@ -43,13 +43,12 @@ def get_races():
 
 
 def get_all_race_results(races, write_data=True):
-    ds_all_results = None
+    all_results = []
     for race_url in races:
         results = get_race_results(race_url, write_data)
-        if ds_all_results != None:
-            ds_all_results.append(results,ignore_index=True)
-        else:
-            ds_all_results = results
+        all_results.append(results)
+    ds_all_results = all_results.pop()
+    ds_all_results.append(ds_all_results,ignore_indexes=False)
     if write_data:
         ds_all_results.to_csv("../data/all_results.csv")
     return ds_all_results
@@ -90,4 +89,5 @@ def get_race_results(race_url, write_data=True):
 
     return ds_results
 
-get_race_results('en/results/466-ironman-703-xiamen/all/')
+#get_race_results('en/results/466-ironman-703-xiamen/all/')
+get_all_race_results(['en/results/466-ironman-703-xiamen/all/','en/results/373-ironman-703-victoria/all/'])
